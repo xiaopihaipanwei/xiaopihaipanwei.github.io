@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sy2,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="pppp" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="chmod [用户（u/g/o）+rwx]/[数字权限] dir/file123功能 -R 递归修改权限默认 目录 777-022=755   权限掩码（022）     文件 666-022=644 wc [options] [file]12345功能 统计文件内容选项 -l 行数     -w 字数     -m 字符数     -c 字节数 more [options] file1234功能">
+<meta name="keywords" content="sy2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 实验二 文件控制">
+<meta property="og:url" content="https://xiaopihaipanwei.github.io/2018/04/10/linux-实验二/index.html">
+<meta property="og:site_name" content="pppp">
+<meta property="og:description" content="chmod [用户（u/g/o）+rwx]/[数字权限] dir/file123功能 -R 递归修改权限默认 目录 777-022=755   权限掩码（022）     文件 666-022=644 wc [options] [file]12345功能 统计文件内容选项 -l 行数     -w 字数     -m 字符数     -c 字节数 more [options] file1234功能">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://images/pasted-1.png/">
+<meta property="og:updated_time" content="2018-05-09T05:57:43.721Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 实验二 文件控制">
+<meta name="twitter:description" content="chmod [用户（u/g/o）+rwx]/[数字权限] dir/file123功能 -R 递归修改权限默认 目录 777-022=755   权限掩码（022）     文件 666-022=644 wc [options] [file]12345功能 统计文件内容选项 -l 行数     -w 字数     -m 字符数     -c 字节数 more [options] file1234功能">
+<meta name="twitter:image" content="https://images/pasted-1.png/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaopihaipanwei.github.io/2018/04/10/linux-实验二/">
+
+
+
+
+
+  <title>linux 实验二 文件控制 | pppp</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a34e9862cb3faebab165d52f616cb855";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pppp</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">平底锅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaopihaipanwei.github.io/2018/04/10/linux-实验二/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pan wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pppp">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux 实验二 文件控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-10T16:52:00+08:00">
+                2018-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="chmod-用户（u-g-o）-rwx-数字权限-dir-file"><a href="#chmod-用户（u-g-o）-rwx-数字权限-dir-file" class="headerlink" title="chmod [用户（u/g/o）+rwx]/[数字权限] dir/file"></a>chmod [用户（u/g/o）+rwx]/[数字权限] dir/file</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">功能 -R 递归修改权限</span><br><span class="line">默认 目录 777-022=755   权限掩码（022）</span><br><span class="line">     文件 666-022=644</span><br></pre></td></tr></table></figure>
+<h4 id="wc-options-file"><a href="#wc-options-file" class="headerlink" title="wc [options] [file]"></a>wc [options] [file]</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">功能 统计文件内容</span><br><span class="line">选项 -l 行数</span><br><span class="line">     -w 字数</span><br><span class="line">     -m 字符数</span><br><span class="line">     -c 字节数</span><br></pre></td></tr></table></figure>
+<h4 id="more-options-file"><a href="#more-options-file" class="headerlink" title="more [options] file"></a>more [options] file</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">功能 文件和结果分屏显示</span><br><span class="line">选项 -s 压缩连续空行为一行</span><br><span class="line">     -n 每页上显示n行（X）</span><br><span class="line">     -d 显示提示信息 （怎么翻页 退出等等） 【Space】下翻 【B】回翻 【Q】退出</span><br></pre></td></tr></table></figure>
+<h4 id="ln-options-file-dir-link"><a href="#ln-options-file-dir-link" class="headerlink" title="ln [options] file/dir link"></a>ln [options] file/dir link</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">功能 创建文件的链接 </span><br><span class="line">（硬链接：两个文件名指向同一个存储空间，不能用于目录   </span><br><span class="line">  软链接/符号链接：快捷方式，适用于目录）</span><br><span class="line">选项 -s 创建符号链接   -f 覆盖同名链接 </span><br><span class="line">     -i 询问确认创建   -b 备份同名链接</span><br><span class="line">ln –s  hello.c  hello</span><br><span class="line">ln –s  /etc/apt/rescoure.list lapt</span><br><span class="line">more –d lapt</span><br></pre></td></tr></table></figure>
+<h4 id="grep-options-pattern-file-1-file2"><a href="#grep-options-pattern-file-1-file2" class="headerlink" title="grep [options] pattern [file 1 file2]"></a>grep [options] pattern [file 1 file2]</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">功能 查找pattern 输出所在行，若pattern中有空格，用双引号括起来</span><br><span class="line">选项 –I 忽略大小写  -w 全词匹配</span><br><span class="line">      -n 输出结果添加行号 </span><br><span class="line">模式  ^pattern   查找行首匹配模式</span><br><span class="line">      Pattern$   查找行尾匹配模式</span><br><span class="line">      -X         模式匹配整行</span><br></pre></td></tr></table></figure>
+<h4 id="ind-dir-expressions"><a href="#ind-dir-expressions" class="headerlink" title="ind dir [expressions]"></a>ind dir [expressions]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">功能 在当前或指定目录中搜索满足条件的文件，并执行制定的文件</span><br><span class="line">表达式 </span><br><span class="line">-name    filename  指定名称</span><br><span class="line">-mtime   n/+n/-n   n天前/超过n天前/不到n天前被修改的文件</span><br><span class="line">-size    n/+n/-n   大于等于/大于/小于 n块（单位b）的文件 一块512B</span><br><span class="line">-<span class="built_in">exec</span>    <span class="built_in">command</span>(命令：rm 等等)  &#123;&#125; \;  将查到的文件执行命令</span><br><span class="line">-ok      <span class="built_in">command</span>(命令：rm 等等)  &#123;&#125; \;  确认执行命令</span><br><span class="line"></span><br><span class="line">例子 Sudo find  / -name sources.Lists</span><br><span class="line">          Find –name ‘’*.c”</span><br><span class="line"></span><br><span class="line">与或非  -a与   -o 或  !非    -name </span><br><span class="line">\(    \)改变优先级</span><br><span class="line">Which <span class="built_in">command</span></span><br><span class="line">功能 按Path 路径查找</span><br></pre></td></tr></table></figure>
+<h4 id="★Tar-options-tar-package-file-air"><a href="#★Tar-options-tar-package-file-air" class="headerlink" title="★Tar  [options]  [tar-package]  file/air"></a>★Tar  [options]  [tar-package]  file/air</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">功能 对文件目录打包或解包</span><br><span class="line">选项  -c 创建新包</span><br><span class="line">      -x 抽取包文件（解包）</span><br><span class="line">      -t 不解包只查看文件</span><br><span class="line">      -u 更新包内的文件名或者添加新文件</span><br><span class="line">      -z 使用gzip压缩（默认，）tar  -czf  mytar.tar..gz   *.c  </span><br><span class="line">      -j  bzip2压缩                     mytar.tar..bz2</span><br><span class="line">      -v 列出打包解包详细过程</span><br><span class="line">      -f 指定压缩包名，最后一个选项（-asdaf 必须在最后面 ，手动加上 .tar）</span><br></pre></td></tr></table></figure>
+<p><img src="\\images\pasted-1.png\" alt="upload successful"></p>
+<h4 id="sort命令"><a href="#sort命令" class="headerlink" title="sort命令"></a>sort命令</h4><h4 id="格式：sort-【options】-file-【file2】"><a href="#格式：sort-【options】-file-【file2】" class="headerlink" title="格式：sort 【options】 file 【file2】"></a>格式：sort 【options】 file 【file2】</h4><h4 id="功能：对文件内容进行排序"><a href="#功能：对文件内容进行排序" class="headerlink" title="功能：对文件内容进行排序"></a>功能：对文件内容进行排序</h4><h4 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-f &quot;忽略大小写&quot;</span><br><span class="line">-r &quot;逆序排列&quot;</span><br><span class="line">-kn &quot;以第n个字段为基准进行排序，默认第1个字段&quot;</span><br><span class="line">-m &quot;合并排序&quot;</span><br><span class="line">//例</span><br><span class="line">$ sort -f college.txt</span><br></pre></td></tr></table></figure>
+<h4 id="diff-命令"><a href="#diff-命令" class="headerlink" title="diff 命令"></a>diff 命令</h4><h4 id="格式：-diff-【opti"><a href="#格式：-diff-【opti" class="headerlink" title="格式： diff 【opti"></a>格式： diff 【opti</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-i &quot;忽略大小写&quot;</span><br><span class="line">-b &quot;忽略空格不同（似乎不起作用）&quot;</span><br><span class="line">-B &quot;忽略空行不痛&quot;</span><br><span class="line">//例</span><br><span class="line">$ diff hello.c hellon.c</span><br></pre></td></tr></table></figure>
+<h4 id="zip-命令"><a href="#zip-命令" class="headerlink" title="zip 命令"></a>zip 命令</h4><h4 id="功能：将文件归档压缩成zip包"><a href="#功能：将文件归档压缩成zip包" class="headerlink" title="功能：将文件归档压缩成zip包"></a>功能：将文件归档压缩成zip包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-r &quot;递归压缩&quot;</span><br><span class="line">iu &quot;更新包中同名文件或添加新文件&quot;</span><br><span class="line">//例</span><br><span class="line">$ zip myzip.zip *c</span><br><span class="line">$ zip -u myzip.zip *.txt</span><br></pre></td></tr></table></figure>
+<h4 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h4><h4 id="功能：解包"><a href="#功能：解包" class="headerlink" title="功能：解包"></a>功能：解包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-d dir &quot;解压到指定目录&quot;</span><br><span class="line">-v &quot;不解包查看包文件&quot;</span><br><span class="line">-n &quot;不覆盖同名文件&quot;</span><br><span class="line">-o &quot;覆盖同名文件&quot;</span><br><span class="line">-t &quot;测试压缩包完整性&quot;</span><br><span class="line">//例</span><br></pre></td></tr></table></figure>
+<p>$ unzip -d tmp myzip.zip<br>$ zip -r myall.zip *//“打包整个目录”</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sy2/" rel="tag"># sy2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/10/sgyy/" rel="next" title="三国演义">
+                <i class="fa fa-chevron-left"></i> 三国演义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/15/linux-实验三-磁盘管理/" rel="prev" title=" linux 实验三 磁盘管理">
+                 linux 实验三 磁盘管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">pan wei</p>
+              <p class="site-description motion-element" itemprop="description">xxx</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod-用户（u-g-o）-rwx-数字权限-dir-file"><span class="nav-number">1.</span> <span class="nav-text">chmod [用户（u/g/o）+rwx]/[数字权限] dir/file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wc-options-file"><span class="nav-number">2.</span> <span class="nav-text">wc [options] [file]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more-options-file"><span class="nav-number">3.</span> <span class="nav-text">more [options] file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln-options-file-dir-link"><span class="nav-number">4.</span> <span class="nav-text">ln [options] file/dir link</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep-options-pattern-file-1-file2"><span class="nav-number">5.</span> <span class="nav-text">grep [options] pattern [file 1 file2]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ind-dir-expressions"><span class="nav-number">6.</span> <span class="nav-text">ind dir [expressions]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#★Tar-options-tar-package-file-air"><span class="nav-number">7.</span> <span class="nav-text">★Tar  [options]  [tar-package]  file/air</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sort命令"><span class="nav-number">8.</span> <span class="nav-text">sort命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#格式：sort-【options】-file-【file2】"><span class="nav-number">9.</span> <span class="nav-text">格式：sort 【options】 file 【file2】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#功能：对文件内容进行排序"><span class="nav-number">10.</span> <span class="nav-text">功能：对文件内容进行排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项"><span class="nav-number">11.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diff-命令"><span class="nav-number">12.</span> <span class="nav-text">diff 命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#格式：-diff-【opti"><span class="nav-number">13.</span> <span class="nav-text">格式： diff 【opti</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zip-命令"><span class="nav-number">14.</span> <span class="nav-text">zip 命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#功能：将文件归档压缩成zip包"><span class="nav-number">15.</span> <span class="nav-text">功能：将文件归档压缩成zip包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unzip"><span class="nav-number">16.</span> <span class="nav-text">unzip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#功能：解包"><span class="nav-number">17.</span> <span class="nav-text">功能：解包</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pan wei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
