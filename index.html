@@ -264,6 +264,247 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaopihaipanwei.github.io/2019/05/24/Springboot-Restful-Swagger2/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pan wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pppp">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/24/Springboot-Restful-Swagger2/" itemprop="url">Springboot + Restful + Swagger2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-24T21:46:49+08:00">
+                2019-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">    &lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">    &lt;springfox.version&gt;2.8.0&lt;/springfox.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;$&#123;springfox.version&#125;&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;$&#123;springfox.version&#125;&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="restful注解"><a href="#restful注解" class="headerlink" title="restful注解"></a>restful注解</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">@Api：用在请求的类上，表示对类的说明</span><br><span class="line">    tags=&quot;说明该类的作用，可以在UI界面上看到的注解&quot;</span><br><span class="line">    value=&quot;该参数没什么意义，在UI界面上也看到，所以不需要配置&quot;</span><br><span class="line">示例：</span><br><span class="line">@Api(tags=&quot;APP用户注册Controller&quot;)</span><br><span class="line"></span><br><span class="line">@ApiOperation：用在请求的方法上，说明方法的用途、作用</span><br><span class="line">    value=&quot;说明方法的用途、作用&quot;</span><br><span class="line">    notes=&quot;方法的备注说明&quot;</span><br><span class="line">示例：</span><br><span class="line">@ApiOperation(value=&quot;用户注册&quot;,notes=&quot;手机号、密码都是必输项，年龄随边填，但必须是数字&quot;)</span><br><span class="line"></span><br><span class="line">@ApiImplicitParams：用在请求的方法上，表示一组参数说明</span><br><span class="line">    @ApiImplicitParam：用在@ApiImplicitParams注解中，指定一个请求参数的各个方面</span><br><span class="line">        name：参数名</span><br><span class="line">        value：参数的汉字说明、解释</span><br><span class="line">        required：参数是否必须传</span><br><span class="line">        paramType：参数放在哪个地方</span><br><span class="line">            · header --&gt; 请求参数的获取：@RequestHeader</span><br><span class="line">            · query --&gt; 请求参数的获取：@RequestParam</span><br><span class="line">            · path（用于restful接口）--&gt; 请求参数的获取：@PathVariable</span><br><span class="line">            · body（不常用）</span><br><span class="line">            · form（不常用）    </span><br><span class="line">        dataType：参数类型，默认String，其它值dataType=&quot;Integer&quot;       </span><br><span class="line">        defaultValue：参数的默认值</span><br><span class="line">示例：</span><br><span class="line">@ApiImplicitParams(&#123;</span><br><span class="line">    @ApiImplicitParam(name=&quot;mobile&quot;,value=&quot;手机号&quot;,required=true,paramType=&quot;form&quot;),</span><br><span class="line">    @ApiImplicitParam(name=&quot;password&quot;,value=&quot;密码&quot;,required=true,paramType=&quot;form&quot;),</span><br><span class="line">    @ApiImplicitParam(name=&quot;age&quot;,value=&quot;年龄&quot;,required=true,paramType=&quot;form&quot;,dataType=&quot;Integer&quot;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">@ApiResponses：用在请求的方法上，表示一组响应</span><br><span class="line">    @ApiResponse：用在@ApiResponses中，一般用于表达一个错误的响应信息</span><br><span class="line">        code：数字，例如400</span><br><span class="line">        message：信息，例如&quot;请求参数没填好&quot;</span><br><span class="line">        response：抛出异常的类</span><br><span class="line">@ApiOperation(value = &quot;select1请求&quot;,notes = &quot;多个参数，多种的查询参数类型&quot;)</span><br><span class="line">@ApiResponses(&#123;</span><br><span class="line">    @ApiResponse(code=400,message=&quot;请求参数没填好&quot;),</span><br><span class="line">    @ApiResponse(code=404,message=&quot;请求路径没有或页面跳转路径不对&quot;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">@ApiModel：用于响应类上，表示一个返回响应数据的信息</span><br><span class="line">            （这种一般用在post创建的时候，使用@RequestBody这样的场景，</span><br><span class="line">            请求参数无法使用@ApiImplicitParam注解进行描述的时候）</span><br><span class="line">    @ApiModelProperty：用在属性上，描述响应类的属性</span><br><span class="line">示例：</span><br><span class="line">import io.swagger.annotations.ApiModel;</span><br><span class="line">import io.swagger.annotations.ApiModelProperty;</span><br><span class="line"></span><br><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">@ApiModel(description= &quot;返回响应数据&quot;)</span><br><span class="line">public class RestMessage implements Serializable&#123;</span><br><span class="line"></span><br><span class="line">    @ApiModelProperty(value = &quot;是否成功&quot;)</span><br><span class="line">    private boolean success=true;</span><br><span class="line">    @ApiModelProperty(value = &quot;返回对象&quot;)</span><br><span class="line">    private Object data;</span><br><span class="line">    @ApiModelProperty(value = &quot;错误编号&quot;)</span><br><span class="line">    private Integer errCode;</span><br><span class="line">    @ApiModelProperty(value = &quot;错误信息&quot;)</span><br><span class="line">    private String message;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">POST请求传入对象 </span><br><span class="line">示例：</span><br><span class="line">   @ApiOperation(value=&quot;保存用户&quot;, notes=&quot;保存用户&quot;)</span><br><span class="line">    @RequestMapping(value=&quot;/saveUser&quot;, method= RequestMethod.POST)</span><br><span class="line">    public String saveUser(@RequestBody @ApiParam(name=&quot;用户对象&quot;,value=&quot;传入json格式&quot;,required=true) User user)&#123;</span><br><span class="line">        userDao.save(user);</span><br><span class="line">        return &quot;success!&quot;;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="swagger-配置"><a href="#swagger-配置" class="headerlink" title="swagger 配置"></a>swagger 配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class SwaggerConfig &#123;</span><br><span class="line">    @Value(&quot;$&#123;swagger.enabled&#125;&quot;)</span><br><span class="line">    private boolean swaggerEnabled;</span><br><span class="line">    @Bean</span><br><span class="line">    public Docket createRestApi() &#123;</span><br><span class="line">        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).enable(swaggerEnabled).select()           .apis(RequestHandlerSelectors.basePackage(&quot;com.restful.demo.conf&quot;)).paths(PathSelectors.any()).build();</span><br><span class="line">    &#125;</span><br><span class="line">    private ApiInfo apiInfo() &#123;</span><br><span class="line">        return new ApiInfoBuilder().title(&quot;Simple Chat-Server RESTful APIs&quot;)</span><br><span class="line">                .description(&quot;Simple Chat-Server Swagger2 RESTful APIs&quot;).version(&quot;1.0&quot;).build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">启动加上swagger注解</span><br><span class="line">@EnableSwagger2</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class DemoApplication &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaopihaipanwei.github.io/2019/02/05/新年快乐/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pan wei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pppp">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/05/新年快乐/" itemprop="url">新年快乐</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-05T12:08:56+08:00">
+                2019-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>2019年了，给自己一个新年快乐！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaopihaipanwei.github.io/2018/12/05/curl的使用/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1373,297 +1614,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaopihaipanwei.github.io/2018/11/20/Spring学习-四/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pan wei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pppp">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/20/Spring学习-四/" itemprop="url">Spring学习(四)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-20T15:49:00+08:00">
-                2018-11-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="创建bean实例的方法"><a href="#创建bean实例的方法" class="headerlink" title="创建bean实例的方法"></a>创建bean实例的方法</h2><h4 id="1-调用静态工厂方法创建"><a href="#1-调用静态工厂方法创建" class="headerlink" title="1.调用静态工厂方法创建"></a>1.调用静态工厂方法创建</h4><p>class：调用的工厂类</p>
-<p>fanctory-method：工厂类中创建bean的方法</p>
-<p>一旦为bean元素指定了factory-method属性，Spring就不再调用构造器来创建Bean实例，而是调用工厂方法来创建Bean实例。如果同时指定了class和factory-method两个属性，Spring就会调用静态工厂方法来创建Bean。</p>
-<p>Spring将先解析配置文件，并根据配置文件指定的信息，通过反射调用静态工厂类的静态工厂方法，将该静态工厂方法的返回值作为Bean实例。在这个过程中，Spring不再负责创建Bean实例，Bean实例是由用户提供的静态工厂类负责创建的。</p>
-<h4 id="2-调用实例工厂方法创建"><a href="#2-调用实例工厂方法创建" class="headerlink" title="2.调用实例工厂方法创建"></a>2.调用实例工厂方法创建</h4><p>实例工厂方法与静态工厂方法只有一点不同：调用静态工厂方法只需要使用工厂类即可，而调用实例工厂方法则需要工厂实例。所以在配置时，静态工厂方法使用class指定静态工厂类，实例工厂方法使用factory-bean指定工厂实例。</p>
-<p>采用实例工厂方法创建Bean的bean元素时需要指定两个属性：</p>
-<p>factory-bean:工厂bean的id</p>
-<p>factory-method:实例工厂的工厂方法</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaopihaipanwei.github.io/2018/11/18/Spring学习-三/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pan wei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pppp">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/18/Spring学习-三/" itemprop="url">Spring学习(三)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T00:09:00+08:00">
-                2018-11-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Component         把对象加入ioc容器，对象引用名称是类名，第一个字母小写</span><br><span class="line">@Component(“name”) 把指定名称的对象，加入ioc容器</span><br><span class="line">@Repository        主要用于标识加入容器的对象是一个持久层的组件(类)</span><br><span class="line">@Service           主要用于标识加入容器的对象是一个业务逻辑层的组件</span><br><span class="line">@Controller        主要用于标识加入容器的对象是一个控制层的组件</span><br><span class="line">@Resource          注入属性(DI), 会从容器中找对象注入到@Resource修饰的对象上</span><br><span class="line">@Autowired *        注入属性(DI), 会从容器中找对象注入到@Autowired修饰的对象上</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Configuration把一个类作为一个IoC容器，它的某个方法头上如果注册了@Bean，就会作为这个Spring容器中的Bean。</span><br><span class="line">@Scope注解 作用域</span><br><span class="line">@Lazy(true) 表示延迟初始化</span><br><span class="line">@Service用于标注业务层组件、 *</span><br><span class="line">@Controller用于标注控制层组件（如struts中的action）*</span><br><span class="line">@Repository用于标注数据访问组件，即DAO组件。*</span><br><span class="line">@Component泛指组件，当组件不好归类的时候，我们可以使用这个注解进行标注。*</span><br><span class="line">@Scope用于指定scope作用域的（用在类上）</span><br><span class="line">@PostConstruct用于指定初始化方法（用在方法上）*</span><br><span class="line">@PreDestory用于指定销毁方法（用在方法上）*</span><br><span class="line">@DependsOn：定义Bean初始化及销毁时的顺序</span><br><span class="line">@Primary：自动装配时当出现多个Bean候选者时，被注解为@Primary的Bean将作为首选者，否则将抛出异常</span><br><span class="line">@Autowired* 默认按类型装配，如果我们想使用按名称装配，可以结合@Qualifier注解一起使用。如下：</span><br><span class="line">@Autowired @Qualifier(&quot;personDaoBean&quot;) 存在多个实例配合使用</span><br><span class="line">@Resource默认按名称装配，当找不到与名称匹配的bean才会按类型装配。</span><br><span class="line">@PostConstruct 初始化注解</span><br><span class="line">@PreDestroy 摧毁注解 默认 单例  启动就加载</span><br><span class="line">@Async异步方法调用</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1714,7 +1664,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
